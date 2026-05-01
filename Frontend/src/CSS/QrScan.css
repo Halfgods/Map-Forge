@@ -1,0 +1,74 @@
+#root:has(.qr-container) {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    /* White Background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.qr-container {
+    text-align: center;
+    width: 360px;
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+h1.qr-h1 {
+    margin-bottom: 8px;
+    color: #111;
+}
+
+p.qr-p {
+    font-size: 14px;
+    color: #666;
+}
+
+#reader {
+    margin-top: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.btn-cont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    /* flex-direction: column; */
+}
+
+.btn-cont button{
+    width:100%
+}
+
+button.restart-qr, button.back-qr {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #000;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+button.restart-qr:hover {
+    background: #333;
+}
