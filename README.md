@@ -1,3 +1,11 @@
+
+
+https://github.com/user-attachments/assets/dcf9f008-6cb0-4dbc-a9e7-76da92102702
+
+
+
+https://github.com/user-attachments/assets/11bc341b-1fb4-48ee-b6a9-3c446d8c1b05
+
 # Map-Forge (ARNavic)
 
 Map-Forge is a comprehensive web application designed for Augmented Reality (AR) based indoor navigation. It allows users to upload building blueprints, scan QR codes to load specific maps, and navigate from one point to another using real-time pathfinding visualized in an AR environment.
