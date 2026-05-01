@@ -180,10 +180,13 @@ Watch the system in action, demonstrating the seamless flow from scanning a QR c
 https://github.com/user-attachments/assets/dcf9f008-6cb0-4dbc-a9e7-76da92102702
 
 <div align="center">
-  <i>Built with love by the Map-Forge Team</i>
-  <ul>
-    <li>Shreyas Mahajan</li>
-    <li>Justin Roy</li>
-    <li>Bhavesh Yadav</li>
-  </ul>
+  <h3>Built with love by the Map-Forge Team</h3>
+  <br/>
+  <p>
+    <img src="https://img.shields.io/badge/Database-Shreyas_Mahajan-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="Shreyas"/>
+    &nbsp;&nbsp;&nbsp;
+    <img src="https://img.shields.io/badge/Python-Justin_Roy-009688?style=for-the-badge&logo=python&logoColor=white" alt="Justin"/>
+    &nbsp;&nbsp;&nbsp;
+    <img src="https://img.shields.io/badge/React-Bhavesh_Yadav-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="Bhavesh"/>
+  </p>
 </div>
