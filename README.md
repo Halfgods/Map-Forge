@@ -181,4 +181,9 @@ https://github.com/user-attachments/assets/dcf9f008-6cb0-4dbc-a9e7-76da92102702
 
 <div align="center">
   <i>Built with love by the Map-Forge Team</i>
+  <ul>
+    <li>Shreyas Mahajan</li>
+    <li>Justin Roy</li>
+    <li>Bhavesh Yadav</li>
+  </ul>
 </div>
