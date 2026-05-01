@@ -52,36 +52,92 @@ A dedicated, high-performance service specifically designed for image processing
 
 ## System Architecture & Routing
 
-### Frontend Routes (React Router)
-The frontend handles the client-side experience and AR visualization.
-* `/` - **Home Page**: Landing dashboard.
-* `/login` & `/signup` - **Authentication**: Secure user onboarding.
-* `/upload` - **Upload Building Maps**: Dashboard for managers to add blueprints and panoramas.
-* `/all-map` - **View All Maps**: Browse available building configurations.
-* `/qr` - **QR Code Scanner**: Instantly load a map based on a physical QR code.
-* `/map` - **AR Navigation View**: The core AR scene rendering the A* path over the real world.
+### High-Level Architecture
 
-### Node.js Backend API
-Acts as the central nervous system, managing data persistence and user sessions.
-* **Auth Routes (`/api/auth`)**
-  * `POST /signup` - Registers a new facility manager/user.
-  * `POST /login` - Authenticates credentials and issues a JWT.
-* **Building Routes (`/api/buildings`)**
-  * `POST /upload` - Uploads blueprint images to Cloudinary and saves metadata to PostgreSQL (Requires Auth).
-  * `GET /my-buildings` - Retrieves buildings specific to the logged-in user.
-* **Public Route (`/api`)**
-  * `GET /building/:id` - Fetches building details, blueprint URLs, and metadata for a scanned QR code.
+```mermaid
+graph TD
+    User([User Device]) -->|Scans QR / Interacts| UI[React Vite App]
+    
+    subgraph Frontend
+    UI
+    end
 
-### Python Pathfinding API
-A stateless microservice dedicated to heavy computational tasks.
-* **Navigation Route (`/navigate`)**
-  * `POST /navigate`
-  * **Payload**: `{ "image_url": "...", "phone_width": 1080, "phone_height": 1920, "start": [x, y], "end": [x, y] }`
-  * **What it does**: 
-    1. Downloads the blueprint from the provided `image_url`.
-    2. Runs OpenCV edge detection to identify walls and generate a collision matrix.
-    3. Executes the A* algorithm to find the optimal path from `start` to `end`.
-    4. Returns a JSON array of `(x, y)` path coordinates and a Base64 encoded image showing the drawn path for debugging/verification.
+    subgraph Backend
+    UI -->|Auth & Map Data| NodeAPI[Node.js Express API]
+    NodeAPI <-->|Queries| DB[(PostgreSQL)]
+    NodeAPI <-->|Media| Cloudinary([Cloudinary])
+    end
+
+    subgraph Microservice
+    UI -->|Req: Start/End Coords + cloudinary image url| PyAPI[FastAPI Python Service]
+    PyAPI -->|Image Processing| CV[OpenCV]
+    CV -->|Matrix| AStar[A* Algorithm]
+    AStar -->|Returns Path Array + image with the path drawn| UI
+    end
+    
+    classDef primary fill:#61DAFB,stroke:#333,stroke-width:2px,color:#000;
+    classDef secondary fill:#339933,stroke:#333,stroke-width:2px,color:#fff;
+    classDef tertiary fill:#009688,stroke:#333,stroke-width:2px,color:#fff;
+    classDef db fill:#4169E1,stroke:#333,stroke-width:2px,color:#fff;
+    
+    class UI primary;
+    class NodeAPI secondary;
+    class PyAPI,CV,AStar tertiary;
+    class DB db;
+```
+
+### Route Definitions
+
+<details>
+<summary><strong>Frontend Routes (React Router)</strong></summary>
+
+| Path | Purpose | Component / Description |
+| :--- | :--- | :--- |
+| `/` | **Home Page** | Landing dashboard |
+| `/login` & `/signup` | **Authentication** | Secure user onboarding |
+| `/upload` | **Upload Building Maps**| Dashboard for managers to add blueprints |
+| `/all-map` | **View All Maps** | Browse available building configurations |
+| `/qr` | **QR Code Scanner** | Instantly load a map based on a physical QR code |
+| `/map` | **AR Navigation View** | The core AR scene rendering the A* path |
+
+</details>
+
+<details>
+<summary><strong>Node.js Backend API</strong></summary>
+
+| Endpoint | Method | Role |
+| :--- | :---: | :--- |
+| `/api/auth/signup` | `POST` | Registers a new facility manager/user |
+| `/api/auth/login` | `POST` | Authenticates credentials and issues a JWT |
+| `/api/buildings/upload` | `POST` | Uploads blueprints and saves metadata (Requires Auth) |
+| `/api/buildings/my-buildings`| `GET` | Retrieves buildings specific to the logged-in user |
+| `/api/building/:id` | `GET` | Fetches details, URLs, and metadata for a scanned QR |
+
+</details>
+
+<details>
+<summary><strong>Python Pathfinding API</strong></summary>
+
+**Endpoint:** `POST /navigate`
+
+**Payload:**
+```json
+{
+  "image_url": "https://...",
+  "phone_width": 1080,
+  "phone_height": 1920,
+  "start": [x1, y1],
+  "end": [x2, y2]
+}
+```
+
+**Execution Flow:**
+1. Downloads the blueprint from `image_url`.
+2. Runs **OpenCV** edge detection to generate a collision matrix.
+3. Executes the **A\*** algorithm to find the optimal path.
+4. Returns a JSON array of `[x, y]` coordinates and a Base64 debug image.
+
+</details>
 
 ---
 
@@ -124,5 +180,5 @@ Watch the system in action, demonstrating the seamless flow from scanning a QR c
 https://github.com/user-attachments/assets/dcf9f008-6cb0-4dbc-a9e7-76da92102702
 
 <div align="center">
-  <i>Built by Map-Forge Team Shreyas , Bhavesh , Justin</i>
+  <i>Built with love by the Map-Forge Team</i>
 </div>
